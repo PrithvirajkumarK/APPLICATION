@@ -1,0 +1,28 @@
+.main{
+    height: 10%;
+    padding: 10px;
+    border: 3px solid hsla(0, 0%, 20%, 0.708);
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    font-family: sans-serif;
+}
+i{
+    font-size: 30px;
+}
+.list1{
+ display: flex;
+ align-items: center;
+ gap: 15px;
+ color: hsl(0, 0%, 27%);
+}
+button{
+    border: none;
+    font-size: 18px;
+    transition: all 0.5s;
+background-color: transparent;
+}
+button:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+}

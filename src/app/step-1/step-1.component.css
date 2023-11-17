@@ -1,0 +1,10 @@
+section{
+    /* display: flex;
+    flex-direction: row; */
+    font-family: sans-serif;
+}
+ol{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

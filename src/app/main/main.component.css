@@ -1,0 +1,14 @@
+section{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+.left{
+    border: solid black;
+    width: 25%;
+}
+.right{
+    border: solid black;
+    width: 50%;
+}
