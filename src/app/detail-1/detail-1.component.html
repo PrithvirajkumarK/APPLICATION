@@ -1,5 +1,22 @@
-<p>detail-1 works!</p>
-<div class="main">
-  <input type="email" placeholder="Enter your Email id" />
-  <input type="password" placeholder="Create a Password" />
-</div>
+<h1>Personal Details</h1>
+<section class="input-container">
+  <form [formGroup]="Details1" class="main-container">
+    <div class="inp1">
+      <label>Name : </label>
+      <input class="text" formControlName="name" placeholder="Ex. Name" />
+    </div>
+
+    <div class="inp2">
+      <label>Age : </label>
+      <input placeholder="Ex. Url" formControlName="age" />
+    </div>
+
+    <div class="radio" *ngFor="let gender of genders">
+      <label>
+        <input type="radio" [value]="gender" formControlName="gender" />{{
+          gender
+        }}
+      </label>
+    </div>
+  </form>
+</section>

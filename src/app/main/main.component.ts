@@ -3,6 +3,12 @@ import { StepsDirective } from '../steps.directive';
 import { DetailsDirective } from '../details.directive';
 import { Step1Component } from '../step-1/step-1.component';
 import { Detail1Component } from '../detail-1/detail-1.component';
+import { Detail2Component } from '../detail-2/detail-2.component';
+import { Detail3Component } from '../detail-3/detail-3.component';
+import { Detail4Component } from '../detail-4/detail-4.component';
+import { Detail5Component } from '../detail-5/detail-5.component';
+import { DataService } from '../data.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -23,32 +29,48 @@ export class MainComponent {
   ];
   public currentComponent = null;
 
-  public detailComponents = [Detail1Component];
+  public detailComponents = [
+    Detail1Component,
+    Detail2Component,
+    Detail3Component,
+    Detail4Component,
+    Detail5Component,
+  ];
   public currentDetailComponent = null;
 
-  constructor() {}
+  constructor(private service: DataService) {}
 
-  public i = -1;
-  public j = -1;
+  public data1 = -1;
+  public data2 = -1;
+  sub!: Subscription;
+  details: any = [];
 
   public next(): void {
     if (
-      this.i <= this.components.length &&
-      this.j <= this.detailComponents.length
+      this.data1 <= this.components.length &&
+      this.data2 <= this.detailComponents.length
     ) {
-      this.i += 1;
-      this.j += 1;
+      this.data1 += 1;
+      this.data2 += 1;
       this.stepsComponent();
       this.detailComponent();
+      this.getDetails();
 
-      console.log(this.i);
-      console.log(this.j);
+      console.log(this.data1);
+      console.log(this.data2);
     } else {
     }
   }
+  ngAfterViewInit() {
+    this.next();
+  }
+
+  ngOnInIt() {
+    this.getDetails();
+  }
 
   stepsComponent() {
-    const currentComponent = this.components[this.i];
+    const currentComponent = this.components[this.data1];
 
     let viewContainerRef = this.appSteps.viewContainerRef;
     viewContainerRef.clear();
@@ -56,11 +78,18 @@ export class MainComponent {
   }
 
   detailComponent() {
-    const currentDetailComponent = this.detailComponents[this.j];
+    const currentDetailComponent = this.detailComponents[this.data2];
 
     let viewDetailContainerRef = this.appDetails.viewContainerRef;
     viewDetailContainerRef.clear();
 
     viewDetailContainerRef.createComponent(currentDetailComponent);
+  }
+
+  getDetails() {
+    this.sub = this.service.shareData.subscribe((data) => {
+      this.details = 'hi';
+      console.log(this.details);
+    });
   }
 }

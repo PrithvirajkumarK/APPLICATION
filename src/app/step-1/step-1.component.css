@@ -1,7 +1,8 @@
 section{
     /* display: flex;
     flex-direction: row; */
-    font-family: sans-serif;
+    font-family: sans-serif ;
+    font-size: 25px;
 }
 ol{
     display: flex;
