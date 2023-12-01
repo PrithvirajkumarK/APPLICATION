@@ -1,14 +1,27 @@
-<h1>Personal Details</h1>
+<h1>{{ data.name }}</h1>
 <section class="input-container">
-  <form [formGroup]="Details1" class="main-container">
+  <form [formGroup]="Details1" (ngSubmit)="next()" class="main-container">
     <div class="inp1">
-      <label>Name : </label>
-      <input class="text" formControlName="name" placeholder="Ex. Name" />
+      <label>Name </label>
+      <input
+        class="text"
+        [value]="name"
+        formControlName="name"
+        placeholder="Enter your name"
+      />
+
+      <span *ngIf="name?.touched && name?.hasError('required')">
+        Please fill this field
+      </span>
     </div>
 
-    <div class="inp2">
-      <label>Age : </label>
-      <input placeholder="Ex. Url" formControlName="age" />
+    <div class="inp1">
+      <label>Age </label>
+      <input type="number" formControlName="age" placeholder="Enter your age" />
+
+      <span *ngIf="age?.touched && age?.hasError('required')">
+        Please fill this field
+      </span>
     </div>
 
     <div class="radio" *ngFor="let gender of genders">
@@ -17,6 +30,23 @@
           gender
         }}
       </label>
+    </div>
+
+    <div class="inp1">
+      <label>Email id </label>
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="Enter your email "
+      />
+
+      <span *ngIf="email?.touched && email?.hasError('required')">
+        Please fill this field
+      </span>
+    </div>
+
+    <div class="button">
+      <button type="submit">Next</button>
     </div>
   </form>
 </section>

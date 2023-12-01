@@ -1,13 +1,11 @@
+<!-- <app-tool-bar [currentStep]="i"></app-tool-bar> -->
 <section>
   <div class="left">
-    <ng-template appSteps></ng-template>
+    <h1 class="one" [class.active]="i === 0">{{ details[0].name }}</h1>
+    <h1 class="two" [class.active]="i === 1">{{ details[1].name }}</h1>
+    <h1 class="three" [class.active]="i === 2">{{ details[2].name }}</h1>
   </div>
   <div class="right">
     <ng-template appDetails></ng-template>
-    <!-- <app-detail-1></app-detail-1> -->
   </div>
 </section>
-<footer>
-  <button (click)="next()">Back</button>
-  <button (click)="next()">Next</button>
-</footer>

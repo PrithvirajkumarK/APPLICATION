@@ -4,4 +4,24 @@
     flex-direction: column;
     gap: 15px;
     font-size: 18px;
+    padding: 20px;
+}
+.inp1{
+    display: flex;
+    flex-direction: column;
+    width: 12rem;
+    gap: 10px;
+}
+input{
+    font-size: 17px;
+    /* display: flex; */
+    gap: 10px;
+}
+.radio{
+    display: flex;
+    flex-direction: row;
+}
+h1{
+padding-left: 20px;
+font-size: 30px;
 }

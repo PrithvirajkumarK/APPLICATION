@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ComponentRef, ViewChild } from '@angular/core';
 import { StepsDirective } from '../steps.directive';
 import { DetailsDirective } from '../details.directive';
 import { Step1Component } from '../step-1/step-1.component';
@@ -9,87 +9,108 @@ import { Detail4Component } from '../detail-4/detail-4.component';
 import { Detail5Component } from '../detail-5/detail-5.component';
 import { DataService } from '../data.service';
 import { Subscription } from 'rxjs';
+import { Detail } from '../detail';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],
 })
 export class MainComponent {
-  @ViewChild(StepsDirective)
-  appSteps!: StepsDirective;
   @ViewChild(DetailsDirective)
   appDetails!: DetailsDirective;
 
-  public components = [
-    Step1Component,
-    Step1Component,
-    Step1Component,
-    Step1Component,
-    Step1Component,
-  ];
-  public currentComponent = null;
+  receivedData: any[] = [];
+  message: any;
+  messages: any;
 
-  public detailComponents = [
-    Detail1Component,
-    Detail2Component,
-    Detail3Component,
-    Detail4Component,
-    Detail5Component,
-  ];
-  public currentDetailComponent = null;
+  constructor() {}
 
-  constructor(private service: DataService) {}
-
-  public data1 = -1;
-  public data2 = -1;
+  public i = 0;
+  public isActive = this.i;
+  currentDComponent: any = [];
   sub!: Subscription;
-  details: any = [];
-
   public next(): void {
-    if (
-      this.data1 <= this.components.length &&
-      this.data2 <= this.detailComponents.length
-    ) {
-      this.data1 += 1;
-      this.data2 += 1;
-      this.stepsComponent();
-      this.detailComponent();
-      this.getDetails();
-
-      console.log(this.data1);
-      console.log(this.data2);
-    } else {
+    if (this.i <= this.details.length) {
+      this.i += 1;
+      this.detailComponent(
+        this.details[this.i].component,
+        this.details[this.i]
+      );
     }
   }
+
+  public back(): void {
+    this.i -= 1;
+    this.backDetailComponent(
+      this.details[this.i].component,
+      this.details[this.i]
+    );
+  }
+
+  ngOnInit() {}
+
   ngAfterViewInit() {
-    this.next();
+    this.detailComponent(this.details[this.i].component, this.details[this.i]);
   }
 
-  ngOnInIt() {
-    this.getDetails();
-  }
+  details: Detail[] = [
+    {
+      name: 'Personal Details',
+      isCompleted: false,
+      isProgress: true,
+      component: Detail1Component,
+      data: [],
+    },
+    {
+      name: 'Delivery Details',
+      isCompleted: false,
+      isProgress: true,
+      component: Detail2Component,
+      data: [],
+    },
+    {
+      name: 'Payment Details',
+      isCompleted: false,
+      isProgress: true,
+      component: Detail3Component,
+      data: [],
+    },
+    // {
+    //   name: 'Submitted',
+    //   isCompleted: false,
+    //   isProgress: true,
+    //   component: ThankYouComponent,
+    //   data: [],
+    // },
+  ];
 
-  stepsComponent() {
-    const currentComponent = this.components[this.data1];
-
-    let viewContainerRef = this.appSteps.viewContainerRef;
-    viewContainerRef.clear();
-    viewContainerRef.createComponent(currentComponent);
-  }
-
-  detailComponent() {
-    const currentDetailComponent = this.detailComponents[this.data2];
-
+  detailComponent(currentComponent: any, data: any) {
     let viewDetailContainerRef = this.appDetails.viewContainerRef;
     viewDetailContainerRef.clear();
-
-    viewDetailContainerRef.createComponent(currentDetailComponent);
-  }
-
-  getDetails() {
-    this.sub = this.service.shareData.subscribe((data) => {
-      this.details = 'hi';
+    let componentRef: ComponentRef<any> =
+      viewDetailContainerRef.createComponent(currentComponent);
+    componentRef.instance.data = data;
+    componentRef.instance.receivedData = this.details[this.i].data;
+    componentRef.instance.output.subscribe((results: any) => {
+      this.details[this.i - 1].data = results;
       console.log(this.details);
     });
+  }
+
+  backDetailComponent(currentComponent: any, data: any) {
+    let viewDetailContainerRef = this.appDetails.viewContainerRef;
+    viewDetailContainerRef.clear();
+    let componentRef: ComponentRef<any> =
+      viewDetailContainerRef.createComponent(currentComponent);
+    componentRef.instance.data = data;
+    componentRef.instance.receivedData = this.details[this.i].data;
+    console.log(this.details[this.i].data);
+  }
+
+  receivedMessage($event: any) {
+    this.message = $event;
+    this.messages = this.message[0].name;
+    console.log(this.message);
   }
 }

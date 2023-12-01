@@ -8,6 +8,7 @@ section{
     border: solid black;
     width: 25%;
     height: 350px;
+    padding: 10px;
     background-color: white;
 }
 .right{
@@ -28,4 +29,26 @@ footer{
 button{
     font-size: 18px;
     transform: translateX(75rem);
+}
+.one{
+    color: black;
+}
+.one.active{
+    color: blue;
+    font-size: 30px;
+}
+.two{
+    color: black;
+}
+.two.active{
+    color:blue ;
+    font-size: 30px;
+
+}
+.three{
+    color:black ;
+}
+.three.active{
+    color:blue ;
+    font-size: 30px;
 }
